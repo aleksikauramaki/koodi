@@ -9,19 +9,14 @@ vastaus = ["I'm sorry, you are gay.", "This world is an illusion.",
     "Travel the world and go fuck yourself", "Lol, who just said that?", "Yep, that's how I roll."]
 
 while True:
-    _ = input("Ask me a question. : ")
-    time.sleep(2)
+    answer = input("Ask me a question. : ")
     print("Thinking...")
-    time.sleep(2)
     print("\n")
     print(random.choice(vastaus))
     print("\n")
-    time.sleep(1)
     uudestaan = input("Do you want to ask another question? [Y/N] : ").lower()
     if uudestaan == "n" or uudestaan == "no":
         break
-    if uudestaan != "y" or uudestaan == "yes":
-    	print("Now, now... Try to behave yourself.")
-    	time.sleep(2)
-    	print("\nOkay, go ahead and ask another question.")
-    	time.sleep(1)
+    if uudestaan != 'y' and uudestaan != 'yes':
+        print("Now, now... Try to behave yourself.\nOkay, "
+            "go ahead and ask another question.")
