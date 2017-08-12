@@ -4,15 +4,26 @@
 # continue.
 import time
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 # Used to promt user for input.
 promt = "> "
+cont = "(Hit RETURN to continue...)"
 
 # Main program runs in a while loop
 while True:
     print("\nWhat do you want to do?\n\t(A) Calculate how much your savings cumulate "
-        "over time\n\t(B) Calculate your passive income\n\t(C) Calculate ROE\n"
-        "\t(D) Estimate how cheap/expensive a company share is\n\t(E) Future value "
-        "of money\n\t(F) Present value of money\n\t(X) Exit\n")
+        "over time\n\t(B) Calculate your passive income\n\t(C) Calculate ROE for your "
+        "investments\n\t(D) Calculate the future value of money\n\t(E) Calculate the "
+        "present value of money\n\t(X) Exit\n")
     answer = input("Enter corresponding letter and press enter : ").lower()
     if answer == "a":
         print("\nHow much will you save in a year?")
@@ -22,21 +33,18 @@ while True:
         voitto = amount*1.07**5
         for x in range(1, years):
             voitto = voitto+amount*1.07**x
-        print("\n**********\n")
-        print("After "+str(years)+" years you will have "+str(round(voitto))+" €.")
-        print("\n**********")
-        time.sleep(5)
+        print(bcolors.OKGREEN + "\nAfter %s years you will have %s €\n" 
+            % (years, round(voitto)) + bcolors.ENDC)
+        input(cont)
     elif answer == "b":
         print("\nHow much have you invested?")
         vastaus = int(input(promt))
         v_tulot = vastaus*0.07*0.98
         kk_tulot = v_tulot/12
         tulot = round(kk_tulot*0.7)
-        print("\n**********\n")
-        print("Your monthly passive income:		    "+str(tulot)+" €")
-        print("Monthly passive income before taxes:        "+str(round(kk_tulot))+" €")
-        print("\n**********")
-        time.sleep(5)
+        print(bcolors.OKGREEN + "\nYour monthly passive income after taxes is "
+            "%s €\n" % tulot + bcolors.ENDC)
+        input(cont)
     elif answer == "c":
         print("\nHow much debt?")
         velka = int(input(promt))
@@ -46,47 +54,31 @@ while True:
         oma_paaoma = int(input(promt))
         print("What is the return (%) for the investment?")
         tuotto = float(input(promt))
-        print("\n**********\n")
-        print("ROE is: "+str(((velka + oma_paaoma) * tuotto - (velka * velan_korko))
-         / oma_paaoma)+" %")
-        print("\n**********")
-        time.sleep(5)
+        roe = (((velka + oma_paaoma) * tuotto - (velka * velan_korko)) / 
+            oma_paaoma)
+        print(bcolors.OKGREEN + "\nYour ROE is %s %%\n" % roe + bcolors.ENDC)
+        input(cont)
     elif answer == "d":
-        print("\nWhat is the P/E?")
-        pe = int(input(promt))
-        print("What is the P/Bv?")
-        pbv = float(input(promt))
-        print("What is the ROE(%)")
-        roe = int(input(promt))
-        print("\n**********\n")
-        if pe * pbv <= 15 and roe >= 15:
-            print("Halpaa ku saippua")
-        else:
-            print("Kallis, älä perkele osta")
-        print("\n**********")
-        time.sleep(5)
-    elif answer == "e":
         print("\nWhat is the amount of money you have now?")
         pv = int(input(promt))
         print("Amount of years to wait?")
         yrs = int(input(promt))
-        a = pv*(1.02**yrs)
-        print("\n**********\n")
-        print("That wil grow to %.2f" % a+" € in "+str(yrs)+" years.")
-        print("\n**********")
-        time.sleep(5)
-    elif answer == "f":
+        a = round(pv*(1.02**yrs))
+        print(bcolors.OKGREEN + "\nThat will grow to %s € in %s years\n" 
+            % (a, yrs) + bcolors.ENDC)
+        input(cont)
+    elif answer == "e":
         print("\nHow much money do you want to have?")
         fv = int(input(promt))
         print("In how many years?")
         yrs = int(input(promt))
-        a =fv/(1.0175**yrs)
-        print("\n**********\n")
-        print("That equals to %.2f" % a+" € in todays money")
-        print("\n**********")
-        time.sleep(5)
+        a = round(fv / (1.0175 ** yrs))
+        print(bcolors.OKGREEN + "\nThat equals to %s € in todays money\n" 
+            % a + bcolors.ENDC)
+        input(cont)
     elif answer == "x":
         break
     else:
-        print("\n**********\nYou pressed a wrong button, try again.\n**********")
-        time.sleep(4)
+        print(bcolors.WARNING + "\nYou pressed a wrong button, please try "
+            "again.\n" + bcolors.ENDC)
+        input(cont)
