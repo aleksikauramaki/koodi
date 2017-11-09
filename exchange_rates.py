@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# 18.11.1989
+
 
 # This script will fetch the USD-to-EUR exchange rate for a given date.
 # https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/usd.xml
