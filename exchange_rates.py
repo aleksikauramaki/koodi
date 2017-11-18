@@ -116,15 +116,15 @@ def findDay():
         return "Sunday"
     elif day == 1:
         return "Monday"
-    elif day == 1:
+    elif day == 2:
         return "Tuesday"
-    elif day == 1:
+    elif day == 3:
         return "Wednesday"
-    elif day == 1:
+    elif day == 4:
         return "Thursday"
-    elif day == 1:
+    elif day == 5:
         return "Friday"
-    elif day == 1:
+    elif day == 6:
         return "Saturnday"
 
 fetchExchangeRates()
