@@ -6,6 +6,7 @@
 
 import requests, re, pyperclip
 
+# To prettify part of the ouput.
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -23,8 +24,10 @@ m = date[1]
 y = date[2]
 date = "%s-%s-%s" % (y, m, d)
 
-def fetchExchangeRates():
 # This fucntion will check EUR-to-USD exchange rate for a given date.
+# It will let you know in case the date is in wrong format, or if the
+# the date happens to be on weekend and there is no data available.
+def fetchExchangeRates():
     url = ("https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_refere"
     "nce_exchange_rates/html/usd.xml")
     global date
@@ -49,10 +52,10 @@ def fetchExchangeRates():
 
     print("Date not found. Make sure you included leading zeroes.")
 
-def findDay():
 # This function will check what day of the week a given date is.
 # Works for years between 1700 - 2300
 # Equation from: https://blog.artofmemory.com/how-to-calculate-the-day-of-the-week-4203.html
+def findDay():
     global d
     global m
     global y
@@ -125,10 +128,3 @@ def findDay():
         return "Saturnday"
 
 fetchExchangeRates()
-
-''' Huom! myös tallentaa
-sen clipboardille, jotta ei tartte erikseen kopioida sitä komentoriviltä.
-ja sitten tee lopulta semmonen, että sieltä dripinvesting sivulta hakee
-sen excelin ja siitä laskee tiettyjä arvoja tai vaikka palauttaa tiettyjä
-arvoja. Se vois vaikka kattoa mitä tietoja on saatavilla ja palauttaa ne
-mitä on saatavilla.'''
