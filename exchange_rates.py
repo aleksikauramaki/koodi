@@ -4,7 +4,7 @@
 # Source for exchange rate data:
 # https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/usd.xml
 
-import requests, re, pyperclip
+import requests, re, pyperclip, calendar
 
 # To prettify part of the ouput.
 class bcolors:
@@ -17,27 +17,36 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-date_format = input("Input the date in the following format 'dd.mm.yyyy'.\n>")
-date = date_format.split(".")
-d = date[0]
-m = date[1]
-y = date[2]
-date = "%s-%s-%s" % (y, m, d)
+def main():
+    date_format = input("Input the date in the following format 'dd.mm.yyyy'.\n>")
+    date = date_format.split(".")
+    d = date[0]
+    m = date[1]
+    y = date[2]
+    date = "%s-%s-%s" % (y, m, d)
+    fetchExchangeRates(date, date_format, d, m, y)
 
 # This fucntion will check EUR-to-USD exchange rate for a given date.
 # It will let you know in case the date is in wrong format, or if the
 # the date happens to be on weekend and there is no data available.
-def fetchExchangeRates():
+def fetchExchangeRates(date, date_format, d, m, y):
     url = ("https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_refere"
     "nce_exchange_rates/html/usd.xml")
-    global date
-    global date_format
+    date
+    date_format
     data = requests.get(url)
     lines = data.text.split("\n")
-    day = findDay()
+    #day = findDay(d, m, y)
+    day = calendar.weekday(int(y), int(m), int(d))
 
-    if day == "Saturnday" or day == "Sunday":
-        print("That day is %s and there is no exchange rate data available." % day)
+    if day == 5:
+        print("That day is Saturnday and there is no exchange rate data"
+        " available.")
+        quit()
+        
+    elif day == 6:
+        print("That day is Sunday and there is no exchange rate data"
+        " available.")
         quit()
 
     for iter in lines:
@@ -52,79 +61,4 @@ def fetchExchangeRates():
 
     print("Date not found. Make sure you included leading zeroes.")
 
-# This function will check what day of the week a given date is.
-# Works for years between 1700 - 2300
-# Equation from: https://blog.artofmemory.com/how-to-calculate-the-day-of-the-week-4203.html
-def findDay():
-    global d
-    global m
-    global y
-
-    year_code = (int(y[2]+y[3]) + int(int(y[2]+y[3]) / 4)) % 7
-
-    mon = m.lstrip("0")
-    if mon == "1":
-        month_code = 0
-    elif mon == "2":
-        month_code = 3
-    elif mon == "3":
-        month_code = 3
-    elif mon == "4":
-        month_code = 6
-    elif mon == "5":
-        month_code = 1
-    elif mon == "6":
-        month_code = 4
-    elif mon == "7":
-        month_code = 6
-    elif mon == "8":
-        month_code = 2
-    elif mon == "9":
-        month_code = 5
-    elif mon == "10":
-        month_code = 0
-    elif mon == "11":
-        month_code = 3
-    elif mon == "12":
-        month_code = 5
-
-    century = y[0] + y[1]
-    if century == "17":
-        century_code = 4
-    elif century == "18":
-        century_code = 2
-    elif century == "19":
-        century_code = 0
-    elif century == "20":
-        century_code = 6
-    elif century == "21":
-        century_code = 4
-    elif century == "22":
-        century_code = 2
-    elif century == "23":
-        century_code = 0
-
-    if int(y) % 4 == 0 and mon == "1" or mon == "2":
-        leap_year_code = 1
-    else:
-        leap_year_code = 0
-
-    day = ((year_code + month_code + century_code + int(d.lstrip("0")) 
-        + leap_year_code) % 7)
-
-    if day == 0:
-        return "Sunday"
-    elif day == 1:
-        return "Monday"
-    elif day == 2:
-        return "Tuesday"
-    elif day == 3:
-        return "Wednesday"
-    elif day == 4:
-        return "Thursday"
-    elif day == 5:
-        return "Friday"
-    elif day == 6:
-        return "Saturnday"
-
-fetchExchangeRates()
+main()
