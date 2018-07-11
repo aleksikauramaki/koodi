@@ -36,14 +36,13 @@ def fetchExchangeRates(date, date_format, d, m, y):
     date_format
     data = requests.get(url)
     lines = data.text.split("\n")
-    #day = findDay(d, m, y)
     day = calendar.weekday(int(y), int(m), int(d))
 
     if day == 5:
         print("That day is Saturnday and there is no exchange rate data"
         " available.")
         quit()
-        
+
     elif day == 6:
         print("That day is Sunday and there is no exchange rate data"
         " available.")
