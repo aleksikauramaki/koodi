@@ -45,9 +45,9 @@ def start():
         start()
 
     elif action.lower() == "c":
-        print("Who is the author?")
+        print("Who is the author? (Last name, First name)")
         author = input(">")
-        print("What is the title?")
+        print("What is the title of the book?")
         title = input(">")
         with open("bookdb", "w") as bookDB:
             bookList.append({"author": author, "title": title})

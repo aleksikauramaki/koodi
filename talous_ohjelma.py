@@ -19,7 +19,8 @@ while True:
     print("\nWhat do you want to do?\n\t(A) Calculate how much your savings cumulate "
         "over time\n\t(B) Calculate your passive income\n\t(C) Calculate ROE for your "
         "investments\n\t(D) Calculate the future value of money\n\t(E) Calculate the "
-        "present value of money\n\t(X) Exit\n\nEnter corresponding letter and press "
+        "present value of money\n\t(F) Use Gordon equation to calculate the right price"
+        " for a stock\n\t(Q) Quit\n\nEnter corresponding letter and press "
         "RETURN.")
     answer = input(prompt).lower()
     if answer == "a":
@@ -73,7 +74,18 @@ while True:
         print(bcolors.OKGREEN + "\nThat equals to %s € in todays money\n" 
             % a + bcolors.ENDC)
         input(cont)
-    elif answer == "x":
+    elif answer == "f": # Gordon equation
+        print("\nWhat is the dividend for next year?")
+        dividend = float(input(prompt))
+        print("What is the average dividend growth rate (%) for the last 5"
+        " years?")
+        dgrowth = float(input(prompt))
+        price = round(dividend / (0.1 - dgrowth*0.01))
+        print(bcolors.OKGREEN + "\nThe right stock price for that company "
+            "is {0} € when calculated using the expected rate of return "
+            "of 10 %.\n".format(price) + bcolors.ENDC)
+        input(cont)
+    elif answer == "q":
         break
     else:
         print(bcolors.WARNING + "\nYou pressed a wrong button, please try "
